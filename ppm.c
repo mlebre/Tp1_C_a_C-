@@ -11,7 +11,7 @@
 //============================================================================
 // Write the image contained in <data> (of size <width> * <height>)
 // into plain RGB ppm file <file>
-void ppm_write_to_file(int width, int height, u_char* data, FILE* file);
+void ppm_write_to_file(char * title, int width, int height, u_char* data);
 
 // Read the image contained in plain RGB ppm file <file>
 // into <data> and set <width> and <height> accordingly
@@ -56,10 +56,8 @@ int main(int argc, char* argv[])
   ppm_desaturate(image_bw, width, height);
 
   // Write the desaturated image into "gargouille_BW.ppm"
-  FILE* ppm_output = fopen("gargouille_BW.ppm", "wb");
-  ppm_write_to_file(width, height, image_bw, ppm_output);
-  fclose(ppm_output);
-
+  char new_name_BW[30]="gargouille_BW.ppm";
+  ppm_write_to_file(new_name_BW, width, height, image_bw);
   // Free the desaturated image
   free(image_bw);
 
@@ -78,9 +76,8 @@ int main(int argc, char* argv[])
   ppm_shrink(&image_small, &width_small, &height_small, 2);
 
   // Write the desaturated image into "gargouille_small.ppm"
-  ppm_output = fopen("gargouille_small.ppm", "wb");
-  ppm_write_to_file(width_small, height_small, image_small, ppm_output);
-  fclose(ppm_output);
+  char name_small[40]="gargouille_small.ppm";
+  ppm_write_to_file(name_small, width_small, height_small, image_small);
 
   // Free the not yet freed images
   free(image);
@@ -94,14 +91,21 @@ int main(int argc, char* argv[])
 //============================================================================
 //                           Function declarations
 //============================================================================
-void ppm_write_to_file(int width, int height, u_char* data, FILE* file)
+void ppm_write_to_file(char * title, int width, int height, u_char* data)
 {
-  
+  FILE *fi=NULL;
+  fi=fopen(title, "wb");
+
+  //Make sure that picture sent exists
+  if(fi!=NULL)
+  {
   // Write header
-  fprintf(file, "P6\n%d %d\n255\n", width, height);
+  fprintf(fi, "P6\n%d %d\n255\n", width, height);
 
   // Write pixels
-  fwrite(data, 3, width*height, file);
+  fwrite(data, 3, width*height, fi);
+  close(fi);
+  }
 }
 
 void ppm_read_from_file(char * title, int *width, int *height, u_char** data)
@@ -120,6 +124,7 @@ void ppm_read_from_file(char * title, int *width, int *height, u_char** data)
 
   // Read the actual image data
   fread(*data, 3, (*width) * (*height), fi);
+  fclose(fi);
   }
   else
   {
