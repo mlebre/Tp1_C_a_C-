@@ -16,7 +16,7 @@ void ppm_write_to_file(int width, int height, u_char* data, FILE* file);
 // Read the image contained in plain RGB ppm file <file>
 // into <data> and set <width> and <height> accordingly
 // Warning: data is malloc_ed, don't forget to free it
-void ppm_read_from_file(int *width, int *height, u_char** data, FILE* file);
+void ppm_read_from_file(char *title, int *width, int *height, u_char** data);
 
 // Desaturate (transform to B&W) <image> (of size <width> * <height>)
 void ppm_desaturate(u_char* image, int width, int height);
@@ -38,9 +38,8 @@ int main(int argc, char* argv[])
   u_char* image = NULL;
   int width;
   int height;
-  FILE* ppm_input = fopen("gargouille.ppm", "rb");
-  ppm_read_from_file(&width, &height, &image, ppm_input);
-  fclose(ppm_input);
+  char name[20]="gargouille.ppm";
+  ppm_read_from_file(name,&width, &height, &image);
 
 
   //--------------------------------------------------------------------------
@@ -97,6 +96,7 @@ int main(int argc, char* argv[])
 //============================================================================
 void ppm_write_to_file(int width, int height, u_char* data, FILE* file)
 {
+  
   // Write header
   fprintf(file, "P6\n%d %d\n255\n", width, height);
 
@@ -104,16 +104,27 @@ void ppm_write_to_file(int width, int height, u_char* data, FILE* file)
   fwrite(data, 3, width*height, file);
 }
 
-void ppm_read_from_file(int *width, int *height, u_char** data, FILE* file)
+void ppm_read_from_file(char * title, int *width, int *height, u_char** data)
 {
+  FILE * fi=NULL;
+  fi=fopen(title, "rb");
+
+  //Make sure that picture sent exists
+  if(fi!=NULL)
+  {
   // Read file header
-  fscanf(file, "P6\n%d %d\n255\n", width, height);
+  fscanf(fi, "P6\n%d %d\n255\n", width, height);
 
   // Allocate memory according to width and height
   *data = (u_char*) malloc(3 * (*width) * (*height) * sizeof(**data));
 
   // Read the actual image data
-  fread(*data, 3, (*width) * (*height), file);
+  fread(*data, 3, (*width) * (*height), fi);
+  }
+  else
+  {
+    printf("Undefine reference to %s", title);
+  }
 }
 
 void ppm_desaturate(u_char* image, int width, int height)
