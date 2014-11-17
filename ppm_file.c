@@ -20,7 +20,7 @@ void ppm_write_to_file(char * title, int width, int height, u_char* data)
 
   // Write pixels
   fwrite(data, 3, width*height, fi);
-  close(fi);
+  fclose(fi);
   }
 }
 
