@@ -1,9 +1,9 @@
-
+#include <cstdio>
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-# include "ppm_file.h"
+#include "ppm_file.h"
 
 
 
@@ -44,8 +44,8 @@ int main(int argc, char* argv[])
   img photo_bw;
   photo_bw.width=photo.width;
   photo_bw.height=photo.height;
-  photo_bw.image= (u_char*) malloc(3 * photo_bw.width * photo_bw.height * sizeof(*photo_bw.image));
-  memcpy(photo_bw.image, photo.image, 3 * photo_bw.width * photo_bw.height * sizeof(*photo_bw.image));
+  photo_bw.image=  new u_char [3 * photo_bw.width * photo_bw.height];
+  memcpy(photo_bw.image, photo.image, 3 * photo_bw.width * photo_bw.height);
 
   // Desaturate image_bw
   ppm_desaturate(photo_bw.image, photo_bw.width, photo_bw.height);
@@ -65,7 +65,7 @@ int main(int argc, char* argv[])
   img photo_small;
   photo_small.width= photo.width;
   photo_small.height= photo.height;
-  photo_small.image= (u_char*) malloc(3 * photo_small.width * photo_small.height * sizeof(*photo_small.image));
+  photo_small.image= new u_char [3 * photo_small.width * photo_small.height];
   memcpy(photo_small.image, photo.image, 3 * photo_small.width * photo_small.height * sizeof(*photo_small.image));
 
   // Shrink image_small size 2-fold
@@ -76,8 +76,8 @@ int main(int argc, char* argv[])
   ppm_write_to_file(name_small, photo_small.width, photo_small.height, photo_small.image);
 
   // Free the not yet freed images
-  free(photo.image);
-  free(photo_small.image);
+  delete(photo.image);
+  delete(photo_small.image);
 
   return 0;
 }
