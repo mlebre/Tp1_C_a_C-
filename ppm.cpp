@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
   img photo;
   char name[20]="gargouille.ppm";
   photo.image = NULL;
-  ppm_read_from_file(name,&photo.width, &photo.height, &photo.image);
+  ppm_read_from_file(name,photo.width, photo.height, &photo.image);
 
   //--------------------------------------------------------------------------
   // Create a desaturated (B&W) copy of the image we've just read and
@@ -69,7 +69,7 @@ int main(int argc, char* argv[])
   memcpy(photo_small.image, photo.image, 3 * photo_small.width * photo_small.height * sizeof(*photo_small.image));
 
   // Shrink image_small size 2-fold
-  ppm_shrink(&photo_small.image, &photo_small.width, &photo_small.height, 2);
+  ppm_shrink(&photo_small.image, photo_small.width, photo_small.height, 2);
 
   // Write the desaturated image into "gargouille_small.ppm"
   char name_small[30]="gargouille_small.ppm";
