@@ -6,6 +6,10 @@
 #include <string.h>
 
 
+//===========================================================================================
+//                                     Constructors 
+//===========================================================================================
+
 // Constructor of default
 image::image(void)
 {
@@ -14,17 +18,18 @@ image::image(void)
   pix=NULL;
 }
 
+//Copy constructor 
 image::image(const image& model)
 {
   width=model.Get_width();
   height=model.Get_height();
-  pix=new unsigned char [3 * (height) * (width)];
+  pix=new u_char [3 * (height) * (width)];
   memcpy(pix, model.Get_pix(), 3* (height) * (width) * sizeof(*pix));
 }
 
 
 //===========================================================================================
-//                                  Methods to use class
+//                                     Getters 
 //===========================================================================================
 
 
@@ -38,11 +43,9 @@ int image::Get_width(void) const
   return width;
 }
 
-unsigned char * image::Get_pix(void) const
+u_char * image::Get_pix(void) const
 {
-
   return pix;
-
 }
 
 
@@ -191,6 +194,5 @@ void image::ppm_shrink(const int factor)
   // Update image
   delete [] pix;
   pix = new_image;
-
 
 }

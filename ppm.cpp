@@ -57,48 +57,7 @@ int main(int argc, char* argv[])
   // Free the not yet freed images
   delete(photo_small.Get_pix());
   delete(photo.Get_pix());
-  
+
   return 0;
 }
-
-
-
-//============================================================================
-//                           Function declarations
-//============================================================================
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
