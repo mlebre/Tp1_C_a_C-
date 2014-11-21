@@ -7,6 +7,7 @@ class image
 
   public:
     image(void);
+    image(const image& model);
     
 
     int Get_height(void) const;
@@ -18,6 +19,7 @@ class image
   	void ppm_read_from_file(const char * title);
   	void ppm_desaturate(void);
   	void ppm_write_to_file(const char *title);
+  	void ppm_shrink(const int factor);
 
 
 };

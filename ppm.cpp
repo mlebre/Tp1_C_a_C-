@@ -35,8 +35,9 @@ int main(int argc, char* argv[])
   // Write the desaturated image into "gargouille_BW.ppm"
   char name_bw[]="gargouille_BW.ppm"; 
   photo_bw.ppm_write_to_file(name_bw);
+
   // Free the desaturated image
-  free(photo_bw.Get_pix());
+  delete(photo_bw.Get_pix());
 
 
   //--------------------------------------------------------------------------
@@ -47,15 +48,16 @@ int main(int argc, char* argv[])
   image photo_small=image(photo);
 
   // Shrink image_small size 2-fold
-  photo_small.ppm_shrink();
-/*
+  photo_small.ppm_shrink(2);
+
   // Write the small image into "gargouille_small.ppm"
   char name_small[]="gargouille_small.ppm";
-//  photo_small.ppm_write_to_file(name_small);
+  photo_small.ppm_write_to_file(name_small);
 
   // Free the not yet freed images
   delete(photo_small.Get_pix());
-*/
+  delete(photo.Get_pix());
+  
   return 0;
 }
 
