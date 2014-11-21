@@ -3,24 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "ppm_file.h"
-
-
-
-//============================================================================
-//                            Struct declaration
-//============================================================================
-
-typedef struct 
-{
-  int height;
-  int width;
-  u_char * image;
-
-} img;
-
-
-
+#include "image.h"
 
 
 //============================================================================
@@ -31,11 +14,14 @@ int main(int argc, char* argv[])
   //--------------------------------------------------------------------------
   // Read file "gargouille.ppm" into image (width and height)
   //--------------------------------------------------------------------------
-  img photo;
-  char name[20]="gargouille.ppm";
-  photo.image = NULL;
-  ppm_read_from_file(name,photo.width, photo.height, &photo.image);
+  image();
+  image photos=image();
+  char name[]="gargouille.ppm";
 
+  photos.ppm_read_from_file(name);
+  printf("%d, %d \n", photos.Get_height(), photos.Get_width());
+
+/*
   //--------------------------------------------------------------------------
   // Create a desaturated (B&W) copy of the image we've just read and
   // write it into "gargouille_BW.ppm"
@@ -76,9 +62,8 @@ int main(int argc, char* argv[])
   ppm_write_to_file(name_small, photo_small.width, photo_small.height, photo_small.image);
 
   // Free the not yet freed images
-  delete(photo.image);
   delete(photo_small.image);
-
+*/
   return 0;
 }
 
@@ -87,7 +72,6 @@ int main(int argc, char* argv[])
 //============================================================================
 //                           Function declarations
 //============================================================================
-
 
 
 
