@@ -55,4 +55,30 @@ void image::ppm_read_from_file(const char * title)
   }
 }
 
+void image::ppm_desaturate(void)
+{
+	 int x, y;
+
+  // For each pixel ...
+  for (x = 0 ; x < width ; x++)
+  {
+    for (y = 0 ; y < height ; y++)
+    {
+      u_int grey_lvl = 0;
+      int rgb_canal;
+
+      // Compute the grey level
+      for (rgb_canal = 0 ; rgb_canal < 3 ; rgb_canal++)
+      {
+        grey_lvl += pix[ 3 * (y * width + x) + rgb_canal ];
+      }
+      grey_lvl /= 3;
+      assert(grey_lvl >= 0 && grey_lvl <=255);
+
+      // Set the corresponding pixel's value in new_image
+      memset(&pix[3 * (y * width + x)], grey_lvl, 3);
+    }
+  }
+}
+
 

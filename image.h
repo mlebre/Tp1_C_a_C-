@@ -13,6 +13,7 @@ class image
     void Set_name(void);
 
   	void ppm_read_from_file(const char * title);
+  	void ppm_desaturate(void);
 
 
 };

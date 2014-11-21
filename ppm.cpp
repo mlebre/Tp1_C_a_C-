@@ -15,33 +15,29 @@ int main(int argc, char* argv[])
   // Read file "gargouille.ppm" into image (width and height)
   //--------------------------------------------------------------------------
   image();
-  image photos=image();
+  image photo=image();
   char name[]="gargouille.ppm";
 
-  photos.ppm_read_from_file(name);
-  printf("%d, %d \n", photos.Get_height(), photos.Get_width());
+  photo.ppm_read_from_file(name);
 
-/*
+
   //--------------------------------------------------------------------------
   // Create a desaturated (B&W) copy of the image we've just read and
   // write it into "gargouille_BW.ppm"
   //--------------------------------------------------------------------------
   // Copy image into image_bw
-  img photo_bw;
-  photo_bw.width=photo.width;
-  photo_bw.height=photo.height;
-  photo_bw.image=  new u_char [3 * photo_bw.width * photo_bw.height];
-  memcpy(photo_bw.image, photo.image, 3 * photo_bw.width * photo_bw.height);
+  image photo_bw=image(photo);
+
 
   // Desaturate image_bw
-  ppm_desaturate(photo_bw.image, photo_bw.width, photo_bw.height);
-
+  photo_bw.ppm_desaturate();
+/*
   // Write the desaturated image into "gargouille_BW.ppm"
-  char name_bw[30]="gargouille_BW.ppm";
+  char name_bw[]="gargouille_BW.ppm"; 
   ppm_write_to_file(name_bw, photo_bw.width, photo_bw.height, photo_bw.image);
   // Free the desaturated image
   free(photo_bw.image);
-
+/*
 
   //--------------------------------------------------------------------------
   // Create a resized copy of the image and
