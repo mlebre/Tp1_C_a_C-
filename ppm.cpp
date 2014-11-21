@@ -31,34 +31,30 @@ int main(int argc, char* argv[])
 
   // Desaturate image_bw
   photo_bw.ppm_desaturate();
-/*
+
   // Write the desaturated image into "gargouille_BW.ppm"
   char name_bw[]="gargouille_BW.ppm"; 
-  ppm_write_to_file(name_bw, photo_bw.width, photo_bw.height, photo_bw.image);
+  photo_bw.ppm_write_to_file(name_bw);
   // Free the desaturated image
-  free(photo_bw.image);
-/*
+  free(photo_bw.Get_pix());
+
 
   //--------------------------------------------------------------------------
   // Create a resized copy of the image and
   // write it into "gargouille_small.ppm"
   //--------------------------------------------------------------------------
   // Copy image into image_small
-  img photo_small;
-  photo_small.width= photo.width;
-  photo_small.height= photo.height;
-  photo_small.image= new u_char [3 * photo_small.width * photo_small.height];
-  memcpy(photo_small.image, photo.image, 3 * photo_small.width * photo_small.height * sizeof(*photo_small.image));
+  image photo_small=image(photo);
 
   // Shrink image_small size 2-fold
-  ppm_shrink(&photo_small.image, photo_small.width, photo_small.height, 2);
-
-  // Write the desaturated image into "gargouille_small.ppm"
-  char name_small[30]="gargouille_small.ppm";
-  ppm_write_to_file(name_small, photo_small.width, photo_small.height, photo_small.image);
+  photo_small.ppm_shrink();
+/*
+  // Write the small image into "gargouille_small.ppm"
+  char name_small[]="gargouille_small.ppm";
+//  photo_small.ppm_write_to_file(name_small);
 
   // Free the not yet freed images
-  delete(photo_small.image);
+  delete(photo_small.Get_pix());
 */
   return 0;
 }

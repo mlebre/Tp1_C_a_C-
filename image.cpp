@@ -5,12 +5,19 @@
 #include <stdlib.h>
 #include <string.h>
 
+
+// Constructor of default
 image::image(void)
 {
   height=0;
   width=0;
   pix=NULL;
 }
+
+//===========================================================================================
+//                                  Methods to use class
+//===========================================================================================
+
 
 int image::Get_height(void) const
 {
@@ -22,7 +29,12 @@ int image::Get_width(void) const
   return width;
 }
 
+unsigned char * image::Get_pix(void) const
+{
 
+  return pix;
+
+}
 
 
 
@@ -81,4 +93,20 @@ void image::ppm_desaturate(void)
   }
 }
 
+void image::ppm_write_to_file(const char *title)
+{
+  FILE *fi=NULL;
+  fi=fopen(title, "wb");
 
+  //Make sure that name matches to a real picture
+  if(fi!=NULL)
+  {
+    // Write header
+    fprintf(fi, "P6\n%d %d\n255\n", width, height);
+
+    // Write pixels
+    fwrite(pix, 3, width*height, fi);
+    fclose(fi);
+  }
+
+}
