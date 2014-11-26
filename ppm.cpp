@@ -14,7 +14,6 @@ int main(int argc, char* argv[])
   //--------------------------------------------------------------------------
   // Read file "gargouille.ppm" into image (width and height)
   //--------------------------------------------------------------------------
-  image();
   image photo=image();
   char name[]="gargouille.ppm";
 
