@@ -6,7 +6,7 @@
 
 // Write the image contained in <data> (of size <width> * <height>)
 // into plain RGB ppm file <file>
-void ppm_write_to_file(char * title, int width, int height, u_char* data)
+void ppm_write_to_file(char * title, int width, int height, u_char* data) const
 
 {
   FILE *fi=NULL;
@@ -21,30 +21,6 @@ void ppm_write_to_file(char * title, int width, int height, u_char* data)
   // Write pixels
   fwrite(data, 3, width*height, fi);
   fclose(fi);
-  }
-}
-
-void ppm_read_from_file(char *title, int & width, int  & height, u_char** data)
-{
-  FILE * fi=NULL;
-  fi=fopen(title, "rb");
-
-  //Make sure that picture sent exists
-  if(fi!=NULL)
-  {
-  // Read file header
-  fscanf(fi, "P6\n%d %d\n255\n", &width, &height);
-
-  // Allocate memory according to width and height
-  *data = (u_char*) malloc(3 * (width) * (height) * sizeof(**data));
-
-  // Read the actual image data
-  fread(*data, 3, (width) * (height), fi);
-  fclose(fi);
-  }
-  else
-  {
-    printf("Undefine reference to %s \n", title);
   }
 }
 
