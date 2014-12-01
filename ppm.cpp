@@ -35,9 +35,6 @@ int main(int argc, char* argv[])
   char name_bw[]="gargouille_BW.ppm"; 
   photo_bw.ppm_write_to_file(name_bw);
 
-  // Free the desaturated image
-  delete(photo_bw.Get_pix());
-
 
   //--------------------------------------------------------------------------
   // Create a resized copy of the image and
@@ -53,10 +50,8 @@ int main(int argc, char* argv[])
   char name_small[]="gargouille_small.ppm";
   photo_small.ppm_write_to_file(name_small);
 
-  // Free the not yet freed image
  // delete(photo.Get_pix()); -->interdit, use a destructor in the class
-  photo_small.~image();
-
+  
   return 0;
-}
+} //call to the destructor is implicit
 

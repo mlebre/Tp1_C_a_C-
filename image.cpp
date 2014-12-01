@@ -33,7 +33,7 @@ image::image(const image& model)
 //===========================================================================================
 image::~image(void)
 {
-  //delete [] pix;
+  delete [] pix;
   pix=NULL;
 }
 
